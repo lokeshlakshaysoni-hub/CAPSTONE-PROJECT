@@ -1,16 +1,12 @@
 /* ============================================================
    index.css — Global Styles for Kraizy
    All pages and components use these styles.
-   Organized into clearly labeled sections below.
    ============================================================ */
 
 /* Load the Outfit font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-/* ── SECTION 1: CSS VARIABLES (Design Tokens)
-   These are reusable values used throughout the CSS.
-   Change a value here and it updates everywhere.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 1: CSS VARIABLES (Design Tokens) ── */
 :root {
   --primary: #6c63ff;
   --primary-dark: #4e46e5;
@@ -27,20 +23,7 @@
   --transition: 0.25s ease;
 }
 
-/* Dark mode overrides — applied when the root div has class="dark" */
-.dark {
-  --bg: #0f0f1a;
-  --surface: #1a1a2e;
-  --surface2: #16213e;
-  --text: #f0f0ff;
-  --text-muted: #a0a0c0;
-  --border: #2a2a4a;
-  --shadow: 0 4px 24px rgba(0,0,0,0.4);
-}
-
-/* ── SECTION 2: RESET & BASE STYLES
-   Remove default browser spacing and set base font.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 2: RESET & BASE STYLES ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
@@ -48,14 +31,10 @@ body {
   font-family: 'Outfit', sans-serif;
   background: var(--bg);
   color: var(--text);
-  transition: background var(--transition), color var(--transition);
   line-height: 1.6;
 }
 
-/* ── SECTION 3: APP LAYOUT
-   .app wraps the whole page (Navbar + Content + Footer).
-   .main-content is the scrollable middle area.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 3: APP LAYOUT ── */
 .app { min-height: 100vh; display: flex; flex-direction: column; }
 .main-content { flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; padding: 2rem 1.5rem; }
 
@@ -66,9 +45,7 @@ body {
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
-  transition: background var(--transition);
 }
-.dark .navbar { background: rgba(26,26,46,0.9); }
 
 .navbar-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
 .brand-icon { font-size: 1.5rem; }
@@ -90,20 +67,7 @@ body {
   display: flex; align-items: center; justify-content: center;
 }
 
-.dark-toggle {
-  background: var(--surface2); border: 1px solid var(--border);
-  color: var(--text); padding: 0.45rem 1rem;
-  border-radius: 50px; cursor: pointer; font-size: 0.85rem;
-  font-family: 'Outfit', sans-serif; font-weight: 600;
-  transition: all var(--transition);
-}
-.dark-toggle:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
-
-/* ── SECTION 5: BUTTONS
-   Two main button styles used across the whole app.
-   .btn-primary  — solid gradient button (main CTA)
-   .btn-secondary — outlined button (secondary action)
-   ──────────────────────────────────────────────── */
+/* ── SECTION 5: BUTTONS ── */
 .btn-primary {
   display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent));
   color: #fff; padding: 0.8rem 2rem; border-radius: 50px;
@@ -113,15 +77,7 @@ body {
 }
 .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(108,99,255,0.5); }
 
-.btn-secondary {
-  display: inline-block; background: transparent;
-  color: var(--primary); padding: 0.8rem 2rem; border-radius: 50px;
-  border: 2px solid var(--primary); text-decoration: none;
-  font-weight: 700; font-size: 1rem; cursor: pointer;
-  transition: all var(--transition);
-}
-.btn-secondary:hover { background: var(--primary); color: #fff; }
-
+/* ── SECTION 6: HOME PAGE ── */
 .hero {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 2rem; align-items: center;
@@ -165,37 +121,20 @@ body {
 .section-subtitle { color: var(--text-muted); margin-bottom: 2rem; }
 .view-all-wrapper { text-align: center; margin-top: 2.5rem; }
 
-/* ── SECTION 7: PRODUCTS GRID
-   Responsive grid used on Home and Products pages.
-   auto-fill + minmax = fills row, min card width 240px.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 7: PRODUCTS GRID ── */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 1.5rem;
 }
 
-/* ── SECTION 8: PRODUCT CARD
-   Single product card with image, name, price, buttons.
-   Used in Home.jsx and Products.jsx via ProductCard.jsx.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 8: PRODUCT CARD ── */
 .product-card {
   background: var(--surface); border-radius: var(--radius);
   overflow: hidden; box-shadow: var(--shadow);
   transition: transform var(--transition), box-shadow var(--transition);
-  position: relative;
 }
 .product-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(108,99,255,0.18); }
-
-.wishlist-btn {
-  position: absolute; top: 12px; right: 12px; z-index: 2;
-  background: rgba(255,255,255,0.9); border: none;
-  border-radius: 50%; width: 36px; height: 36px;
-  cursor: pointer; font-size: 1.1rem;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15); transition: transform var(--transition);
-}
-.wishlist-btn:hover { transform: scale(1.2); }
 
 .card-img-wrapper { height: 220px; overflow: hidden; }
 .card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
@@ -216,9 +155,7 @@ body {
 }
 .btn-add-cart:hover { background: var(--primary-dark); transform: translateY(-1px); }
 
-/* ── SECTION 9: PRODUCTS PAGE
-   Search bar, category filter buttons, results count.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 9: PRODUCTS PAGE ── */
 .products-page { padding: 1rem 0; }
 .products-header { margin-bottom: 1.5rem; }
 .page-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.3rem; }
@@ -246,9 +183,7 @@ body {
 .results-count { color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem; }
 .empty-state { text-align: center; padding: 4rem; color: var(--text-muted); font-size: 1.1rem; }
 
-/* ── SECTION 10: CART PAGE
-   Two-column layout: cart items list + order summary panel.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 10: CART PAGE ── */
 .cart-page { padding: 1rem 0; }
 .cart-layout { display: grid; grid-template-columns: 1fr 360px; gap: 2rem; margin-top: 2rem; }
 
@@ -263,19 +198,7 @@ body {
 .cart-item-name { font-size: 1.05rem; font-weight: 700; margin: 0.3rem 0; }
 .cart-item-price { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem; }
 
-.quantity-controls { display: flex; align-items: center; gap: 0.75rem; }
-.qty-btn {
-  width: 32px; height: 32px; border-radius: 50%;
-  border: 2px solid var(--border); background: var(--surface2);
-  color: var(--text); font-size: 1.1rem; font-weight: 700;
-  cursor: pointer; display: flex; align-items: center; justify-content: center;
-  transition: all var(--transition);
-}
-.qty-btn:hover { border-color: var(--primary); background: var(--primary); color: #fff; }
-.qty-display { font-size: 1.1rem; font-weight: 700; min-width: 24px; text-align: center; }
-
 .cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem; }
-.cart-item-subtotal { font-size: 1.1rem; font-weight: 800; color: var(--primary); }
 .btn-remove {
   background: #fee2e2; color: #dc2626; border: none;
   padding: 0.4rem 0.9rem; border-radius: var(--radius-sm);
@@ -294,7 +217,6 @@ body {
 .summary-total { font-size: 1.2rem; font-weight: 800; margin-top: 0.5rem; }
 .summary-divider { border: none; border-top: 1px solid var(--border); margin: 1rem 0; }
 .free-delivery { color: #10b981; font-weight: 700; }
-.discount-text { color: #10b981; font-weight: 600; }
 .free-delivery-hint { font-size: 0.8rem; color: var(--accent); margin: 0.8rem 0; background: rgba(255,101,132,0.1); padding: 0.6rem; border-radius: var(--radius-sm); }
 .btn-checkout {
   width: 100%; padding: 1rem; border: none; border-radius: var(--radius-sm);
@@ -312,108 +234,7 @@ body {
 .empty-cart h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 0.5rem; }
 .empty-cart p { color: var(--text-muted); margin-bottom: 2rem; }
 
-/* ── SECTION 11: WISHLIST PAGE
-   Grid of saved products, each with Move-to-Cart and Remove buttons.
-   ──────────────────────────────────────────────── */
-.wishlist-page { padding: 1rem 0; }
-.wishlist-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 1.5rem; margin-top: 1.5rem;
-}
-.wishlist-card { background: var(--surface); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
-.wishlist-img-wrapper { position: relative; height: 220px; }
-.wishlist-img { width: 100%; height: 100%; object-fit: cover; }
-.remove-wish-btn {
-  position: absolute; top: 10px; right: 10px;
-  background: rgba(255,255,255,0.9); border: none;
-  border-radius: 50%; width: 36px; height: 36px;
-  font-size: 1.1rem; cursor: pointer; display: flex;
-  align-items: center; justify-content: center;
-  transition: transform var(--transition);
-}
-.remove-wish-btn:hover { transform: scale(1.2); }
-.wishlist-card-body { padding: 1.2rem; }
-.wishlist-card-body h3 { font-size: 1rem; font-weight: 700; margin: 0.4rem 0; }
-.wishlist-card-actions { display: flex; gap: 0.5rem; margin-top: 0.8rem; flex-wrap: wrap; }
-.btn-remove-wish {
-  flex: 1; padding: 0.6rem; border: 2px solid var(--border);
-  background: transparent; color: var(--text-muted);
-  border-radius: var(--radius-sm); cursor: pointer;
-  font-family: 'Outfit', sans-serif; font-weight: 600;
-  transition: all var(--transition);
-}
-.btn-remove-wish:hover { border-color: var(--accent); color: var(--accent); }
-
-/* ── SECTION 12: PROFILE PAGE
-   Header with avatar, editable info form, and stats cards.
-   ──────────────────────────────────────────────── */
-.profile-page { padding: 1rem 0; max-width: 800px; margin: 0 auto; }
-.profile-header {
-  display: flex; gap: 1.5rem; align-items: center;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; color: #fff;
-}
-.avatar {
-  width: 80px; height: 80px; border-radius: 50%;
-  background: rgba(255,255,255,0.25);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 2rem; font-weight: 800; flex-shrink: 0;
-}
-.profile-header-info h1 { font-size: 1.6rem; font-weight: 800; }
-.profile-header-info p { opacity: 0.85; margin: 0.3rem 0; }
-.member-badge { background: rgba(255,255,255,0.2); padding: 0.2rem 0.8rem; border-radius: 50px; font-size: 0.8rem; font-weight: 600; }
-
-.profile-card { background: var(--surface); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); margin-bottom: 1.5rem; }
-.profile-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-.profile-card-header h2 { font-size: 1.2rem; font-weight: 800; }
-.btn-edit {
-  background: var(--surface2); border: 2px solid var(--border);
-  color: var(--text); padding: 0.5rem 1.2rem; border-radius: var(--radius-sm);
-  cursor: pointer; font-weight: 600; font-family: 'Outfit', sans-serif;
-  transition: all var(--transition);
-}
-.btn-edit:hover { border-color: var(--primary); color: var(--primary); }
-
-.profile-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-.info-item label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 0.3rem; }
-.info-item p { font-size: 1rem; font-weight: 500; }
-.full-width { grid-column: 1 / -1; }
-
-.profile-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.form-group label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; }
-.form-group input, .form-group textarea {
-  padding: 0.75rem 1rem; border: 2px solid var(--border);
-  border-radius: var(--radius-sm); background: var(--surface2);
-  color: var(--text); font-family: 'Outfit', sans-serif; font-size: 0.95rem;
-  outline: none; transition: border-color var(--transition); resize: vertical;
-}
-.form-group input:focus, .form-group textarea:focus { border-color: var(--primary); }
-
-.form-actions { grid-column: 1 / -1; display: flex; gap: 1rem; }
-.btn-save {
-  padding: 0.75rem 2rem; background: var(--primary); color: #fff;
-  border: none; border-radius: var(--radius-sm); font-weight: 700;
-  cursor: pointer; font-family: 'Outfit', sans-serif; transition: all var(--transition);
-}
-.btn-save:hover { background: var(--primary-dark); }
-.btn-cancel {
-  padding: 0.75rem 2rem; background: transparent; color: var(--text-muted);
-  border: 2px solid var(--border); border-radius: var(--radius-sm);
-  font-weight: 700; cursor: pointer; font-family: 'Outfit', sans-serif;
-  transition: all var(--transition);
-}
-.btn-cancel:hover { border-color: var(--accent); color: var(--accent); }
-
-.profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.stat-card { background: var(--surface); border-radius: var(--radius); padding: 1.5rem; text-align: center; box-shadow: var(--shadow); }
-.stat-number { font-size: 2rem; font-weight: 800; color: var(--primary); display: block; }
-.stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem; }
-
-/* ── SECTION 13: FOOTER
-   Three-column layout: brand info, quick links, contact.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 11: FOOTER ── */
 .footer { background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 2rem 1rem; margin-top: 4rem; }
 .footer-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
 .footer-brand h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
@@ -426,10 +247,7 @@ body {
 .footer-contact p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.4rem; }
 .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.85rem; }
 
-/* ── SECTION 14: RESPONSIVE DESIGN
-   Adjusts layout for tablets (max 900px) and phones (max 600px).
-   These rules override the desktop styles above.
-   ──────────────────────────────────────────────── */
+/* ── SECTION 12: RESPONSIVE DESIGN ── */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; text-align: center; }
   .hero-subtitle { max-width: 100%; }
@@ -438,8 +256,6 @@ body {
   .features { grid-template-columns: repeat(2, 1fr); }
   .cart-layout { grid-template-columns: 1fr; }
   .footer-container { grid-template-columns: 1fr 1fr; }
-  .profile-info-grid, .profile-form { grid-template-columns: 1fr; }
-  .profile-stats { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 600px) {
@@ -448,7 +264,6 @@ body {
   .nav-links { gap: 0; }
   .nav-link { padding: 0.4rem 0.6rem; font-size: 0.85rem; }
   .features { grid-template-columns: 1fr 1fr; }
-  .profile-stats { grid-template-columns: 1fr; }
   .footer-container { grid-template-columns: 1fr; }
   .hero-card { width: 140px; }
   .main-content { padding: 1rem; }

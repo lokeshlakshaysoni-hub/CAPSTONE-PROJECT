@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-function Navbar({ darkMode, toggleDark, cartCount, wishlistCount }) {
+function Navbar({ cartCount }) {
   const location = useLocation();
 
   return (
@@ -29,17 +29,6 @@ function Navbar({ darkMode, toggleDark, cartCount, wishlistCount }) {
         </li>
         <li>
           <Link
-            to="/wishlist"
-            className={location.pathname === "/wishlist" ? "nav-link active" : "nav-link"}
-          >
-            Wishlist
-            {wishlistCount > 0 && (
-              <span className="badge wishlist-badge">{wishlistCount}</span>
-            )}
-          </Link>
-        </li>
-        <li>
-          <Link
             to="/cart"
             className={location.pathname === "/cart" ? "nav-link active" : "nav-link"}
           >
@@ -49,19 +38,7 @@ function Navbar({ darkMode, toggleDark, cartCount, wishlistCount }) {
             )}
           </Link>
         </li>
-        <li>
-          <Link
-            to="/profile"
-            className={location.pathname === "/profile" ? "nav-link active" : "nav-link"}
-          >
-            Profile
-          </Link>
-        </li>
       </ul>
-
-      <button className="dark-toggle" onClick={toggleDark} title="Toggle theme">
-        {darkMode ? "☀️ Light" : "🌙 Dark"}
-      </button>
     </nav>
   );
 }

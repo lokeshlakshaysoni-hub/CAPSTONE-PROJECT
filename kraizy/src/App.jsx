@@ -4,8 +4,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Cart from "./pages/Cart";
-import Profile from "./pages/Profile";
-import Wishlist from "./pages/Wishlist";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -15,128 +13,69 @@ import products from "./data/products";
 import "./index.css";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
-  const toggleDark = () => setDarkMode(!darkMode);
-
+  // useState is a React Hook that lets us store data that can change over time.
+  // Here, we create a 'cart' variable which is an empty array at the start.
   const [cart, setCart] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
 
-  const addToCart = (product) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === product.id);
-      if (existingItem) {
-        return prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else {
-        return [...prevCart, { ...product, quantity: 1 }];
+  // Function to add a product to our cart
+  function addToCart(product) {
+    let isAlreadyInCart = false;
+
+    // We use a basic loop to check if the product is already inside our cart array
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].id === product.id) {
+        isAlreadyInCart = true;
       }
-    });
-  };
+    }
 
-  const removeFromCart = (productId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
-  };
+    if (isAlreadyInCart === true) {
+      alert("This product is already in your cart!");
+    } else {
+      // If it is not in the cart, we create a new array with the old items plus the new product
+      const updatedCart = [...cart, product];
+      setCart(updatedCart);
+      alert("Successfully added to cart!");
+    }
+  }
 
-  const increaseQty = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === productId
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
-  };
+  // Function to remove a product from our cart using its unique ID
+  function removeFromCart(productId) {
+    const updatedCart = [];
 
-  const decreaseQty = (productId) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.id === productId && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  const toggleWishlist = (product) => {
-    setWishlist((prev) => {
-      const alreadyWishlisted = prev.find((w) => w.id === product.id);
-      if (alreadyWishlisted) {
-        return prev.filter((w) => w.id !== product.id);
-      } else {
-        return [...prev, product];
+    // We loop through the cart. If the item's ID does NOT match the one we want to remove, we keep it.
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].id !== productId) {
+        updatedCart.push(cart[i]);
       }
-    });
-  };
+    }
 
-  const removeFromWishlist = (productId) => {
-    setWishlist((prev) => prev.filter((w) => w.id !== productId));
-  };
-
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+    // We update our state with the new array
+    setCart(updatedCart);
+  }
 
   return (
-    <div className={darkMode ? "app dark" : "app"}>
+    <div className="app">
+      {/* BrowserRouter wraps our app so we can navigate between different pages */}
       <BrowserRouter>
-        <Navbar
-          darkMode={darkMode}
-          toggleDark={toggleDark}
-          cartCount={cartCount}
-          wishlistCount={wishlist.length}
-        />
+        <Navbar cartCount={cart.length} />
 
         <main className="main-content">
           <Routes>
+            {/* Route tells React which Component to load for a specific URL path */}
             <Route
               path="/"
-              element={
-                <Home
-                  products={products}
-                  onAddToCart={addToCart}
-                  onAddToWishlist={toggleWishlist}
-                  wishlist={wishlist}
-                />
-              }
+              element={<Home products={products} onAddToCart={addToCart} />}
             />
 
             <Route
               path="/products"
-              element={
-                <Products
-                  products={products}
-                  onAddToCart={addToCart}
-                  onAddToWishlist={toggleWishlist}
-                  wishlist={wishlist}
-                />
-              }
+              element={<Products products={products} onAddToCart={addToCart} />}
             />
 
             <Route
               path="/cart"
-              element={
-                <Cart
-                  cart={cart}
-                  onRemove={removeFromCart}
-                  onIncrease={increaseQty}
-                  onDecrease={decreaseQty}
-                />
-              }
+              element={<Cart cart={cart} onRemove={removeFromCart} />}
             />
-
-            <Route
-              path="/wishlist"
-              element={
-                <Wishlist
-                  wishlist={wishlist}
-                  onRemoveFromWishlist={removeFromWishlist}
-                  onAddToCart={addToCart}
-                />
-              }
-            />
-
-            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
 

@@ -1,228 +1,104 @@
-# ⚡ Kraizy — React E-Commerce App
+# Kraizy E-Commerce App
 
-> **Kraizy** is a beginner-friendly React.js e-commerce web app built with Vite and React Router.
-> It lets users browse clothing products, manage a shopping cart, save items to a wishlist, and view a profile page.
-> The project demonstrates core React concepts — `useState`, props, and client-side routing — in a real-world shopping app.
+Hey there! This is Kraizy, a beginner-friendly React.js e-commerce website I built for my B.Tech project. 
 
----
+It is designed to be super simple and easy to understand. Users can browse products, search for specific clothes, and add things to a shopping cart to see their total price. 
 
-## 📁 Project Structure
+## Project Credits & Honesty
+Just to be transparent about how this project was built:
+- The entire project structure, file organization, and React component setup were made by me.
+- The CSS user interface design (the modern look and feel) was designed with the use of AI.
+- Some of the Javascript code logic was also written with the help of AI to ensure everything runs smoothly.
 
-```
+## Project Structure
+Here is how the project is organized:
+
 kraizy/
-├── index.html               ← Main HTML file (React mounts here)
-├── vite.config.js           ← Vite build tool configuration
-├── package.json             ← Project dependencies and scripts
-└── src/
-    ├── main.jsx             ← Entry point — renders <App /> into index.html
-    ├── App.jsx              ← Root component — holds all state and routing
-    ├── index.css            ← Global styles for the entire app
-    ├── data/
-    │   └── products.js      ← Static product data (acts as our database)
-    ├── components/
-    │   ├── Navbar.jsx       ← Top navigation bar (shown on all pages)
-    │   ├── Footer.jsx       ← Bottom footer (shown on all pages)
-    │   └── ProductCard.jsx  ← Reusable card for displaying one product
-    └── pages/
-        ├── Home.jsx         ← Home page with hero section and featured products
-        ├── Products.jsx     ← All products page with search and category filter
-        ├── Cart.jsx         ← Shopping cart with quantity controls and total
-        ├── Wishlist.jsx     ← Saved/wishlisted products page
-        └── Profile.jsx      ← User profile page with edit functionality
+-- index.html (the main html file)
+-- package.json (holds the project dependencies)
+-- src/
+   -- main.jsx (renders the app)
+   -- App.jsx (the main brain of the app that holds the cart state)
+   -- index.css (all the styles)
+   -- components/
+      -- Navbar.jsx (top navigation)
+      -- Footer.jsx (bottom footer)
+      -- ProductCard.jsx (reusable card for showing a single product)
+   -- pages/
+      -- Home.jsx (the landing page)
+      -- Products.jsx (the page with all clothes and search bar)
+      -- Cart.jsx (the shopping cart page)
+   -- data/
+      -- products.js (our mock database of clothes)
+
+## Where is the main logic code used?
+If you are looking for the files where the core Javascript logic happens:
+
+1. src/App.jsx
+This is where the cart state lives. It has the "addToCart" and "removeFromCart" functions. It uses basic "for" loops to check if a product is already in the cart and to filter items out.
+
+2. src/pages/Products.jsx
+This file contains the logic for the search bar and category filters. It loops through the products and uses step-by-step "if/else" statements to match the text typed by the user to the product names.
+
+3. src/pages/Cart.jsx
+This file calculates the total price of the items in the cart. It uses a standard "for" loop to add the prices together and figures out if the user gets free delivery based on the total.
+
+## Tech Stack
+React.js: for building the user interface.
+Vite: to run the development server fast.
+React Router DOM: to navigate between Home, Products, and Cart without reloading the page.
+CSS: plain vanilla css for styling.
+
+## How to run it
+
+1. Open your terminal in this folder
+2. Run "npm install" to download dependencies
+3. Run "npm run dev" to start the server
+4. Open the localhost link in your browser!
+
+## Basic Viva Questions
+
+**Q: What is React?**
+It is a JavaScript library for building user interfaces using reusable components.
+
+**Q: What are Props?**
+Data or functions passed from a parent component down to a child component.
+
+**Q: What is the .map() function used for?**
+It loops over an array and returns HTML for each item. I used `.map()` to take my array of cart items and turn them into visual HTML cards on the screen. The "key" helps React keep track of which item is which.
+
+**Q: Why did you use Vite?**
+Because it is a very fast tool for starting and building React apps compared to older tools.
+
+---
+
+## Important Code i used in my project
+
+**1. useState (from App.jsx)**
+```javascript
+const [cart, setCart] = useState([]);
 ```
+**Use:** A React hook that stores data that can change. I used this to create a "cart" variable (starting as an empty array). When I call "setCart", React automatically updates the screen to show the new items.
 
----
-
-## 🛠️ Tech Stack
-
-| Technology | Purpose |
-|---|---|
-| **React.js** | Building the UI using components |
-| **Vite** | Fast development server and build tool |
-| **React Router DOM** | Client-side navigation between pages |
-| **useState (React Hook)** | Managing cart, wishlist, and dark mode state |
-| **CSS (Vanilla)** | All styling — no external UI library used |
-| **Google Fonts (Outfit)** | Clean, modern typography |
-
----
-
-## ⚛️ Key React Concepts Used
-
-### 1. `useState` — State Management
-State is data that can change and cause the UI to re-render.
-
-```jsx
-const [cart, setCart] = useState([]);       // cart starts as empty array
-const [darkMode, setDarkMode] = useState(false); // dark mode starts as OFF
+**2. Props (from App.jsx to Cart.jsx)**
+```javascript
+<Cart cart={cart} onRemove={removeFromCart} />
 ```
+**Use:** Props let us pass data or functions from a parent file to a child file. App.jsx (the parent) is sending the cart array and the removeFromCart function down to Cart.jsx (the child) so that the child can display the items and delete them.
 
-All main state lives in `App.jsx` so it can be shared across pages.
-
----
-
-### 2. Props — Passing Data Between Components
-Props are how a parent component sends data or functions to a child component.
-
-```jsx
-// App.jsx sends these props DOWN to the Cart page
-<Cart
-  cart={cart}
-  onRemove={removeFromCart}
-  onIncrease={increaseQty}
-  onDecrease={decreaseQty}
-/>
+**3. "for" loop (from Cart.jsx)**
+```javascript
+let totalPrice = 0;
+for (let i = 0; i < cart.length; i++) {
+  totalPrice = totalPrice + cart[i].price;
+}
 ```
+**Use:** A loop repeats a block of code. I used a for loop to go through every single item currently inside the cart array. For each item, I take its price and add it to my running "totalPrice" variable.
 
-```jsx
-// Cart.jsx receives and uses them
-function Cart({ cart, onRemove, onIncrease, onDecrease }) { ... }
+**4. The Search Filter (from Products.jsx)**
+```javascript
+if (lowerCaseProductName.includes(lowerCaseSearchText)) {
+  matchesSearch = true;
+}
 ```
-
----
-
-### 3. React Router — Client-Side Navigation
-React Router allows switching between pages without a full browser reload.
-
-```jsx
-<BrowserRouter>
-  <Routes>
-    <Route path="/"         element={<Home />} />
-    <Route path="/products" element={<Products />} />
-    <Route path="/cart"     element={<Cart />} />
-    <Route path="/wishlist" element={<Wishlist />} />
-    <Route path="/profile"  element={<Profile />} />
-  </Routes>
-</BrowserRouter>
-```
-
-- `<Link to="/products">` is used instead of `<a href>` so the page does NOT reload.
-- `useLocation()` in `Navbar.jsx` reads the current URL to highlight the active link.
-
----
-
-### 4. `.map()` — Rendering Lists
-`.map()` loops over an array and returns JSX for each item.
-
-```jsx
-{products.map((product) => (
-  <ProductCard key={product.id} product={product} />
-))}
-```
-
-The `key` prop helps React efficiently update only the changed item.
-
----
-
-### 5. `.filter()` — Search and Category Filtering (Products Page)
-```jsx
-const filteredProducts = products.filter((product) => {
-  const matchesCategory = selectedCategory === "All" || product.category === selectedCategory;
-  const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-  return matchesCategory && matchesSearch;
-});
-```
-
----
-
-### 6. `.reduce()` — Calculating Cart Total
-```jsx
-const totalPrice = cart.reduce(
-  (total, item) => total + item.price * item.quantity,
-  0
-);
-```
-
----
-
-### 7. Conditional Rendering
-Show different UI based on a condition:
-
-```jsx
-{cart.length === 0 ? (
-  <p>Your cart is empty!</p>
-) : (
-  <div>...show cart items...</div>
-)}
-```
-
----
-
-### 8. Controlled Inputs (Profile Page)
-Input values are tied to state — React controls what the user sees:
-
-```jsx
-<input
-  name="name"
-  value={tempProfile.name}
-  onChange={(e) => setTempProfile({ ...tempProfile, [e.target.name]: e.target.value })}
-/>
-```
-
----
-
-## 📄 Page-by-Page Explanation
-
-### 🏠 Home (`/`)
-- Shows a **hero section** with brand tagline and two floating product cards.
-- Displays **4 featured products** using `ProductCard`.
-- Has a features strip: Free Delivery, Easy Returns, Secure Payment, Premium Quality.
-
-### 🛍️ Products (`/products`)
-- Shows **all 8 products** in a responsive grid.
-- **Search bar** filters products by name in real time.
-- **Category buttons** filter products by type (T-Shirts, Jeans, etc.).
-- Uses `useState` for `searchTerm` and `selectedCategory`.
-
-### 🛒 Cart (`/cart`)
-- Lists all items added to the cart with image, name, price, and quantity.
-- **+/−** buttons call `increaseQty` / `decreaseQty` from `App.jsx`.
-- Shows an **Order Summary** panel with subtotal, delivery, 5% discount, and final total.
-- Free delivery is applied automatically when order value ≥ ₹999.
-
-### ❤️ Wishlist (`/wishlist`)
-- Lists all products the user has saved (hearted).
-- **Move to Cart** button adds the item to cart and removes it from wishlist.
-- **Remove** button removes the item from wishlist only.
-
-### 👤 Profile (`/profile`)
-- Displays user info: name, email, phone, city, bio.
-- **Edit Profile** button switches to an editable form (controlled inputs).
-- **Save** updates the profile state; **Cancel** resets any unsaved changes.
-- Shows 3 stat cards: Orders Placed, Wishlisted, Reviews Given.
-
----
-
-## 🌙 Dark Mode
-- A toggle button in the Navbar flips `darkMode` state in `App.jsx`.
-- When `darkMode` is `true`, the class `"dark"` is added to the root `<div>`.
-- CSS variables in `.dark { }` override the default light-mode colors automatically.
-
----
-
-## 🚀 How to Run Locally
-
-```bash
-# Step 1: Install dependencies
-npm install
-
-# Step 2: Start the development server
-npm run dev
-
-# Step 3: Open in browser
-# Go to: http://localhost:5173
-```
-
----
-
-## 💡 Interview / Viva Tips
-
-| Question | Answer |
-|---|---|
-| What is React? | A JavaScript library for building UI using reusable components |
-| What is `useState`? | A React hook that stores data that can change and triggers re-render |
-| What are Props? | Data/functions passed from parent to child component |
-| What is React Router? | A library for URL-based navigation without page reload |
-| Why use `key` in lists? | Helps React identify which item changed for efficient re-rendering |
-| What is a controlled input? | An input whose value is always driven by React state |
-| What does `.map()` do? | Loops over an array and returns a new array (used to render lists) |
-| What is Vite? | A fast build tool that serves React apps during development |
+**Use:** I take the product's name and convert it to lowercase, and then I check if it "includes" the lowercase text that the user typed into the search bar. If it does, I keep it on the screen!

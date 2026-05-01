@@ -1,15 +1,6 @@
-function ProductCard({ product, onAddToCart, onAddToWishlist, isWishlisted }) {
+function ProductCard({ product, onAddToCart }) {
   return (
     <div className="product-card">
-
-      <button
-        className={`wishlist-btn ${isWishlisted ? "wishlisted" : ""}`}
-        onClick={() => onAddToWishlist(product)}
-        title={isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
-      >
-        {isWishlisted ? "❤️" : "🤍"}
-      </button>
-
       <div className="card-img-wrapper">
         <img
           src={product.image}

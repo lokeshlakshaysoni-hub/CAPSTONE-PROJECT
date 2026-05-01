@@ -1,13 +1,27 @@
 import { Link } from "react-router-dom";
 
-function Cart({ cart, onRemove, onIncrease, onDecrease }) {
-  const totalPrice = cart.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+// Cart component receives 'cart' (the array of products) and 'onRemove' (the function to remove a product)
+function Cart({ cart, onRemove }) {
+  
+  // Step 1: Calculate the total price using a basic for-loop
+  let totalPrice = 0;
+  for (let i = 0; i < cart.length; i++) {
+    totalPrice = totalPrice + cart[i].price;
+  }
 
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  // Step 2: Get the total number of items
+  const totalItems = cart.length;
 
+  // Step 3: Determine the delivery charge based on the total price
+  let deliveryCharge = 99;
+  if (totalPrice >= 999) {
+    deliveryCharge = 0;
+  }
+
+  // Step 4: Calculate final total
+  const finalTotal = totalPrice + deliveryCharge;
+
+  // If the cart is empty, show the empty state UI
   if (cart.length === 0) {
     return (
       <div className="cart-page">
@@ -23,6 +37,7 @@ function Cart({ cart, onRemove, onIncrease, onDecrease }) {
     );
   }
 
+  // If the cart has items, render the list
   return (
     <div className="cart-page">
       <h1 className="page-title">Your Cart</h1>
@@ -30,22 +45,19 @@ function Cart({ cart, onRemove, onIncrease, onDecrease }) {
 
       <div className="cart-layout">
         <div className="cart-items">
+          {/* We use .map() to loop over the cart array and display HTML for each item */}
           {cart.map((item) => (
             <div key={item.id} className="cart-item">
               <img src={item.image} alt={item.name} className="cart-item-img" />
               <div className="cart-item-info">
                 <span className="cart-item-category">{item.category}</span>
                 <h3 className="cart-item-name">{item.name}</h3>
-                <p className="cart-item-price">₹{item.price.toLocaleString()} each</p>
-                <div className="quantity-controls">
-                  <button className="qty-btn" onClick={() => onDecrease(item.id)} title="Decrease quantity">−</button>
-                  <span className="qty-display">{item.quantity}</span>
-                  <button className="qty-btn" onClick={() => onIncrease(item.id)} title="Increase quantity">+</button>
-                </div>
+                <p className="cart-item-price">₹{item.price.toLocaleString()}</p>
               </div>
               <div className="cart-item-right">
-                <p className="cart-item-subtotal">₹{(item.price * item.quantity).toLocaleString()}</p>
-                <button className="btn-remove" onClick={() => onRemove(item.id)}>🗑️ Remove</button>
+                <button className="btn-remove" onClick={() => onRemove(item.id)}>
+                  🗑️ Remove
+                </button>
               </div>
             </div>
           ))}
@@ -57,26 +69,32 @@ function Cart({ cart, onRemove, onIncrease, onDecrease }) {
             <span>Subtotal ({totalItems} items)</span>
             <span>₹{totalPrice.toLocaleString()}</span>
           </div>
+          
           <div className="summary-row">
             <span>Delivery</span>
-            <span className={totalPrice >= 999 ? "free-delivery" : ""}>
-              {totalPrice >= 999 ? "FREE ✅" : "₹99"}
+            <span className={deliveryCharge === 0 ? "free-delivery" : ""}>
+              {deliveryCharge === 0 ? "FREE ✅" : "₹" + deliveryCharge}
             </span>
           </div>
-          <div className="summary-row">
-            <span>Discount</span>
-            <span className="discount-text">-₹{Math.floor(totalPrice * 0.05).toLocaleString()}</span>
-          </div>
+          
           <div className="summary-divider"></div>
+          
           <div className="summary-row summary-total">
             <span>Total</span>
-            <span>₹{(totalPrice + (totalPrice < 999 ? 99 : 0) - Math.floor(totalPrice * 0.05)).toLocaleString()}</span>
+            <span>₹{finalTotal.toLocaleString()}</span>
           </div>
-          {totalPrice < 999 && (
-            <p className="free-delivery-hint">Add ₹{999 - totalPrice} more for FREE delivery!</p>
+          
+          {/* Show a hint if they are close to free delivery */}
+          {deliveryCharge > 0 && (
+            <p className="free-delivery-hint">
+              Add ₹{999 - totalPrice} more for FREE delivery!
+            </p>
           )}
+          
           <button className="btn-checkout">Proceed to Checkout →</button>
-          <Link to="/products" className="continue-shopping">← Continue Shopping</Link>
+          <Link to="/products" className="continue-shopping">
+            ← Continue Shopping
+          </Link>
         </div>
       </div>
     </div>

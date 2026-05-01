@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 
-function Home({ products, onAddToCart, onAddToWishlist, wishlist }) {
+function Home({ products, onAddToCart }) {
   const featuredProducts = products.slice(0, 4);
 
   return (
     <div className="home-page">
-
       <section className="hero">
         <div className="hero-content">
           <p className="hero-tag">🔥 New Collection 2024</p>
@@ -22,9 +21,6 @@ function Home({ products, onAddToCart, onAddToWishlist, wishlist }) {
             <Link to="/products" className="btn-primary">
               Shop Now →
             </Link>
-            <Link to="/wishlist" className="btn-secondary">
-              ❤️ Wishlist
-            </Link>
           </div>
         </div>
 
@@ -38,10 +34,10 @@ function Home({ products, onAddToCart, onAddToWishlist, wishlist }) {
           </div>
           <div className="hero-card hero-card-2">
             <img
-              src=" https://media.istockphoto.com/id/1501795711/photo/happy-man-posing-with-shopping-bags-and-pizza-while-standing-next-to-a-scooter-blurred.webp?a=1&b=1&s=612x612&w=0&k=20&c=X4-U1eJ60J2Y4rY5K7lR1v7D8_G4T6K-Lp8N0yB5E9U="
+              src="https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=300&h=300&fit=crop"
               alt="Hoodie"
             />
-            <span>Sneakers 🔥</span>
+            <span>Hoodie 🔥</span>
           </div>
         </div>
       </section>
@@ -79,8 +75,6 @@ function Home({ products, onAddToCart, onAddToWishlist, wishlist }) {
               key={product.id}
               product={product}
               onAddToCart={onAddToCart}
-              onAddToWishlist={onAddToWishlist}
-              isWishlisted={wishlist.some((w) => w.id === product.id)}
             />
           ))}
         </div>
@@ -91,7 +85,6 @@ function Home({ products, onAddToCart, onAddToWishlist, wishlist }) {
           </Link>
         </div>
       </section>
-
     </div>
   );
 }
