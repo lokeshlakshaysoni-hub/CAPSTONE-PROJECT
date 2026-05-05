@@ -1,104 +1,88 @@
-# Kraizy E-Commerce App
+ Kraizy E-Commerce 
 
-Hey there! This is Kraizy, a beginner-friendly React.js e-commerce website I built for my B.Tech project. 
+## 1. Project Introduction 
 
-It is designed to be super simple and easy to understand. Users can browse products, search for specific clothes, and add things to a shopping cart to see their total price. 
 
-## Project Credits & Honesty
-Just to be transparent about how this project was built:
-- The entire project structure, file organization, and React component setup were made by me.
-- The CSS user interface design (the modern look and feel) was designed with the use of AI.
-- Some of the Javascript code logic was also written with the help of AI to ensure everything runs smoothly.
+My project is named Kraizy, which is a fully functional, front-end e-commerce web application built using React.js. 
 
-## Project Structure
-Here is how the project is organized:
+The main goal of this project was to build a dynamic, single-page application (SPA) where users can seamlessly browse products, add them to a wishlist, and manage a shopping cart without the page ever reloading. 
 
-kraizy/
--- index.html (the main html file)
--- package.json (holds the project dependencies)
--- src/
-   -- main.jsx (renders the app)
-   -- App.jsx (the main brain of the app that holds the cart state)
-   -- index.css (all the styles)
-   -- components/
-      -- Navbar.jsx (top navigation)
-      -- Footer.jsx (bottom footer)
-      -- ProductCard.jsx (reusable card for showing a single product)
-   -- pages/
-      -- Home.jsx (the landing page)
-      -- Products.jsx (the page with all clothes and search bar)
-      -- Cart.jsx (the shopping cart page)
-   -- data/
-      -- products.js (our mock database of clothes)
+To achieve this, I used several core React concepts:
+- React Router for navigating between the Home, Products, Wishlist, and Cart pages.
+- Context API for global state management, allowing any component to access the cart and wishlist instantly.
+- React Hooks to manage dynamic data and user interactions.
 
-## Where is the main logic code used?
-If you are looking for the files where the core Javascript logic happens:
-
-1. src/App.jsx
-This is where the cart state lives. It has the "addToCart" and "removeFromCart" functions. It uses basic "for" loops to check if a product is already in the cart and to filter items out.
-
-2. src/pages/Products.jsx
-This file contains the logic for the search bar and category filters. It loops through the products and uses step-by-step "if/else" statements to match the text typed by the user to the product names.
-
-3. src/pages/Cart.jsx
-This file calculates the total price of the items in the cart. It uses a standard "for" loop to add the prices together and figures out if the user gets free delivery based on the total.
-
-## Tech Stack
-React.js: for building the user interface.
-Vite: to run the development server fast.
-React Router DOM: to navigate between Home, Products, and Cart without reloading the page.
-CSS: plain vanilla css for styling.
-
-## How to run it
-
-1. Open your terminal in this folder
-2. Run "npm install" to download dependencies
-3. Run "npm run dev" to start the server
-4. Open the localhost link in your browser!
-
-## Basic Viva Questions
-
-**Q: What is React?**
-It is a JavaScript library for building user interfaces using reusable components.
-
-**Q: What are Props?**
-Data or functions passed from a parent component down to a child component.
-
-**Q: What is the .map() function used for?**
-It loops over an array and returns HTML for each item. I used `.map()` to take my array of cart items and turn them into visual HTML cards on the screen. The "key" helps React keep track of which item is which.
-
-**Q: Why did you use Vite?**
-Because it is a very fast tool for starting and building React apps compared to older tools.
+The platform features a modern, responsive UI with search filtering, category sorting, and dynamic cart calculations."
 
 ---
 
-## Important Code i used in my project
+## 2. Core Concepts & Functions Used
 
-**1. useState (from App.jsx)**
-```javascript
-const [cart, setCart] = useState([]);
-```
-**Use:** A React hook that stores data that can change. I used this to create a "cart" variable (starting as an empty array). When I call "setCart", React automatically updates the screen to show the new items.
+### `useState`
+A React Hook that lets us store data that changes over time (like user input or toggle switches).
+I used `useState` to keep track of the `searchTerm` (what the user types in the search box) and the `selectedCategory` (which filter button the user clicked).
 
-**2. Props (from App.jsx to Cart.jsx)**
-```javascript
-<Cart cart={cart} onRemove={removeFromCart} />
-```
-**Use:** Props let us pass data or functions from a parent file to a child file. App.jsx (the parent) is sending the cart array and the removeFromCart function down to Cart.jsx (the child) so that the child can display the items and delete them.
+### `useContext` / Context API
+A way to share data globally across the entire app without passing variables down manually through every single component (prop-drilling).
+I created a `ShopContext` to store the `cart` and `wishlist` arrays. Any page that needs to show the cart count or add an item simply calls `useContext(ShopContext)`.
 
-**3. "for" loop (from Cart.jsx)**
-```javascript
-let totalPrice = 0;
-for (let i = 0; i < cart.length; i++) {
-  totalPrice = totalPrice + cart[i].price;
-}
-```
-**Use:** A loop repeats a block of code. I used a for loop to go through every single item currently inside the cart array. For each item, I take its price and add it to my running "totalPrice" variable.
+### Array `.filter()`
+A JavaScript function that goes through an array and creates a *new* array containing only the items that pass a specific condition.
+On the Products and Wishlist pages, I used `.filter()` to only show products that match the selected category and the typed search term.
 
-**4. The Search Filter (from Products.jsx)**
-```javascript
-if (lowerCaseProductName.includes(lowerCaseSearchText)) {
-  matchesSearch = true;
-}
-```
-**Use:** I take the product's name and convert it to lowercase, and then I check if it "includes" the lowercase text that the user typed into the search bar. If it does, I keep it on the screen!
+### Array `.map()`
+A JavaScript function that loops through an array and transforms each item into something else.
+I used `.map()` to loop through the array of product objects and transform them into HTML `<ProductCard>` components to display on the screen.
+
+### Basic `for` loops
+A fundamental programming concept to repeat an action.
+Inside my functions like `addToCart` and `removeFromCart`, I used simple `for` loops to iterate over arrays. For example, to calculate the total cart price, I loop through the cart array and add up the `price` of each item.
+
+---
+
+## 3. Code Explanation "Turn-by-Turn" (File by File)
+
+### 📄 `src/App.jsx`
+This is the starting point and main wrapper of the application.
+- It wraps everything inside `<ShopProvider>`, giving all pages access to global data.
+- It uses `<BrowserRouter>` and `<Routes>` to set up navigation. 
+- It defines the URL paths (like `/products` and `/cart`) and tells React which page component to load when the user visits that URL.
+
+### 📄 `src/context/ShopContext.jsx`
+This is the "global storage" for the application.
+- It uses `useState` to store the `cart` and `wishlist` arrays.
+- It contains standard JavaScript functions with `for` loops to `addToCart`, `removeFromCart`, `addToWishlist`, and `removeFromWishlist`.
+- For example, `addToCart` loops through the existing cart to check if the product is already there. If not, it adds it to the array.
+- It then "provides" these variables and functions to the rest of the app.
+
+### 📄 `src/pages/Home.jsx`
+The landing page of the website.
+It uses `useContext` to pull the global list of products.
+It uses `.slice(0, 4)` to take only the first 4 products and display them in a "Featured Products" section.
+It contains static HTML sections for the hero banner and store features (like Free Delivery).
+
+### 📄 `src/pages/Products.jsx`
+The main shopping page where users can search and filter.
+It uses `useState` for `searchTerm` and `selectedCategory`.
+- It dynamically generates category buttons by looking at all the products and using `new Set()` to extract unique categories.
+- It uses `.filter()` to decide which products to show based on what the user searched for and which category button they clicked.
+- Finally, it uses `.map()` to render the filtered products onto the screen.
+
+### 📄 `src/pages/Wishlist.jsx`
+A dedicated page to view saved items.
+- Very similar to `Products.jsx`, but instead of looking at all products, it uses `useContext` to only look at the `wishlist` array.
+- It allows the user to filter their saved wishlist items by category using the same `.filter()` logic.
+
+### 📄 `src/pages/Cart.jsx`
+Displays the items the user wants to buy and calculates the final bill.
+- It uses `useContext` to get the `cart` array.
+- It runs a `for` loop over the cart array to add up the `price` of every item, giving us the `totalPrice`.
+- It uses an `if` statement to apply a delivery charge of ₹99 unless the total is over ₹999.
+- It displays the items, and has a "Remove" button that triggers the `removeFromCart` function from our context.
+
+### 📄 `src/components/ProductCard.jsx`
+A reusable UI component that represents a single product box.
+- It receives a single `product` object via props.
+- It displays the product's image, name, category, and price.
+- It uses `useContext` to get the Add/Remove functions.
+- It uses a basic `for` loop to check if this specific product is inside the global `wishlist` array. If it is, it shows a "❤️ Remove from Wishlist" button. If it isn't, it shows a "🤍 Add to Wishlist" button.

@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 import ProductCard from "../components/ProductCard";
 
-function Products({ products, onAddToCart }) {
+function Products() {
+  // We use useContext to get our products from ShopContext instead of props
+  const { products } = useContext(ShopContext);
+
   // We use useState to keep track of what the user types in the search bar and what category they click
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
@@ -80,7 +84,6 @@ function Products({ products, onAddToCart }) {
             <ProductCard
               key={product.id}
               product={product}
-              onAddToCart={onAddToCart}
             />
           ))}
         </div>

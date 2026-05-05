@@ -30,7 +30,7 @@ const products = [
     id: 4,
     name: "Hoodie Sweatshirt",
     price: 1299,
-    image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=400&h=400&fit=crop",
+    image: "/hoodie.png",
     category: "Hoodies",
     rating: 4.8,
     description: "Stay cozy and stylish with this premium cotton blend hoodie."

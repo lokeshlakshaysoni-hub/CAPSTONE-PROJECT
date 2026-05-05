@@ -1,7 +1,12 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 import ProductCard from "../components/ProductCard";
 
-function Home({ products, onAddToCart }) {
+function Home() {
+  // Pull products from Context instead of props
+  const { products } = useContext(ShopContext);
+
   const featuredProducts = products.slice(0, 4);
 
   return (
@@ -34,7 +39,7 @@ function Home({ products, onAddToCart }) {
           </div>
           <div className="hero-card hero-card-2">
             <img
-              src="https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=300&h=300&fit=crop"
+              src="/hoodie.png"
               alt="Hoodie"
             />
             <span>Hoodie 🔥</span>
@@ -74,7 +79,6 @@ function Home({ products, onAddToCart }) {
             <ProductCard
               key={product.id}
               product={product}
-              onAddToCart={onAddToCart}
             />
           ))}
         </div>

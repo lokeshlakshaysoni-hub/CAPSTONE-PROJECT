@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
 
-// Cart component receives 'cart' (the array of products) and 'onRemove' (the function to remove a product)
-function Cart({ cart, onRemove }) {
-  
+function Cart() {
+  // We use useContext to pull our cart and removeFromCart function directly from ShopContext
+  const { cart, removeFromCart } = useContext(ShopContext);
+
   // Step 1: Calculate the total price using a basic for-loop
   let totalPrice = 0;
   for (let i = 0; i < cart.length; i++) {
@@ -55,7 +58,7 @@ function Cart({ cart, onRemove }) {
                 <p className="cart-item-price">₹{item.price.toLocaleString()}</p>
               </div>
               <div className="cart-item-right">
-                <button className="btn-remove" onClick={() => onRemove(item.id)}>
+                <button className="btn-remove" onClick={() => removeFromCart(item.id)}>
                   🗑️ Remove
                 </button>
               </div>
