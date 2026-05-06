@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+ import { useState, useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import ProductCard from "../components/ProductCard";
 
@@ -23,7 +23,7 @@ function Products() {
     } else if (product.category === selectedCategory) {
       matchesCategory = true;
     }
-
+ 
     // Step 2: Check if the product name contains the search text
     let matchesSearch = false;
     let lowerCaseProductName = product.name.toLowerCase();

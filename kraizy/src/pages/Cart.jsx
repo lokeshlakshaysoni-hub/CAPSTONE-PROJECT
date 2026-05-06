@@ -20,7 +20,7 @@ function Cart() {
   if (totalPrice >= 999) {
     deliveryCharge = 0;
   }
-
+7
   // Step 4: Calculate final total
   const finalTotal = totalPrice + deliveryCharge;
 
