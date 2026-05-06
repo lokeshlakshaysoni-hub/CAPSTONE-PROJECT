@@ -4,7 +4,7 @@
 
 # Project Overview
 
-Kraizy is a modern, responsive e-commerce web application built with React.js. It features a complete shopping experience where users can:
+Kraizy is a modern, responsive e-commerce web application like amazon ,  built with React.js. It features a complete shopping experience where users can:
 - Browse products across different categories.
 - Search for specific items in real-time.
 - Save items to a Wishlist.
@@ -51,7 +51,18 @@ Creates a new array by filtering out items that don't match a condition.
 Goes through every item in an array and turns it into HTML.
 - Used in: Displaying the grid of products on the screen.
 
+# 10. useState Hook
+const [items, setItems] = useState([]);
+UsedState is a react hook that creates a state variable. In beginner terms, it's a variable that React "watches." Whenever the value changes, React automatically updates the screen.
+
+# 11. context api
+Context API is a react hook that creates a state variable. In beginner terms, it's a variable that React "watches." Whenever the value changes, React automatically updates the screen.
 ---
+
+# 12. useEffect Hook
+useEffect is a react hook that is used to perform side effects in a functional component. Side effects are any code that affects the outside world, such as API calls, DOM manipulations, and event listeners.
+
+
 
 # File-by-File Breakdown
 
@@ -92,14 +103,6 @@ The "Display Box" for each item.
 - It has buttons to Add to Cart or Add/Remove from Wishlist.
 
 ---
-
-# Viva Questions to Prepare For
-
-# Q: Why did you use React instead of plain HTML?
-A: React allows for a Single Page Application experience where the page doesn't refresh. It's faster and more modern.
-
-# Q: What is the Context API?
-A: It's a way to manage "Global State." It lets us keep the Cart data in one place and share it with every page easily.
 
 # Q: How does the search filter work?
 A: I take the user's input, convert it to lowercase, and use the `.filter()` method to check if each product's name `.includes()` that input.
