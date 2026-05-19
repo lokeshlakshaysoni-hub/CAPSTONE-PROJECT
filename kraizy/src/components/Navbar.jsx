@@ -4,10 +4,10 @@ import { ShopContext } from "../context/ShopContext";
 
 function Navbar() {
   const location = useLocation();
-  
+
   // Pull our cart and wishlist from the global context
   const { cart, wishlist } = useContext(ShopContext);
-  
+
   const cartCount = cart.length;
   const wishlistCount = wishlist.length;
 
